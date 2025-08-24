@@ -1,6 +1,7 @@
 name: Build and Push Docker Image
 
 on:
+  workflow_dispatch:  # manual trigger
   push:
     branches: [ "main" ]   # build on code push to main
 
@@ -20,6 +21,6 @@ jobs:
       - name: Build and Push
         uses: docker/build-push-action@v6
         with:
-          context: .
+          context: /app
           push: true
-          tags: ${{ secrets.DOCKERHUB_USERNAME }}/myapp:latest,${{ secrets.DOCKERHUB_USERNAME }}/myapp:${{ github.sha }}
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/${{vars.DOCKERHUB_REPO}}:latest,${{ secrets.DOCKERHUB_USERNAME }}/${{vars.DOCKERHUB_REPO}}:${{ github.sha }}
